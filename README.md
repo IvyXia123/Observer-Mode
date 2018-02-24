@@ -1,2 +1,2 @@
 # Observer-Mode
-Javascript设计模之——观察者模式
+Javascript设计模式之——观察者模式

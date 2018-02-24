@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    //（一）学生只有一个老师的情况：
+    /* function Teacher() {
+         this.students=[];   //发布者维护订阅者列表
+     }
+
+     Teacher.prototype.register=function(obj){
+         this.students.push(obj);
+     };
+     Teacher.prototype.liuzuoye=function (content) {
+         for(var i=0;i<this.students.length;i++){
+             //遍历所有学生并分别调用他们的listen方法：
+             this.students[i].listen(content);
+         }
+     };
+     function Student() {
+         kaoLa.register(this);    //学生去注册成为kaoLa的学生
+     }
+     Student.prototype.listen=function (content) {
+         this.zuoye=content;
+     };
+
+     var kaoLa=new Teacher();  //⚠️注意：发布者要在订阅者之前实例化
+     var xiaohua=new Student();
+     var xiaoming=new Student();
+     var xiaohong=new Student();
+
+     kaoLa.liuzuoye("背古诗");
+     console.log(xiaohua.zuoye);
+     console.log(xiaoming.zuoye);
+     console.log(xiaohong.zuoye);  */
+
+    //=====================================================================
+
+    //（二）不同老师有不同学生的情况：
+    function Teacher() {
+        this.students = [];   //发布者维护订阅者列表
+    }
+
+    Teacher.prototype.register = function (obj) {
+        this.students.push(obj);
+    };
+    Teacher.prototype.liuzuoye = function (content) {
+        for (var i = 0; i < this.students.length; i++) {
+            //遍历所有学生并分别调用他们的listen方法：
+            this.students[i].listen(content);
+        }
+    };
+
+    function Student(teacher) {
+        teacher.register(this);    //学生去注册成为kaoLa的学生
+    }
+
+    Student.prototype.listen = function (content) {
+        this.zuoye = content;
+    };
+
+    // kaoLa的实例及其学生的实例
+    var kaoLa = new Teacher();
+    var xiaohua = new Student(kaoLa);
+    var xiaoming = new Student(kaoLa);
+    var xiaohong = new Student(kaoLa);
+
+    // kongzi的实例及其学生的实例
+    var kongzi = new Teacher();
+    var zilu = new Student(kongzi);
+
+    kaoLa.liuzuoye("背古诗");   //kaoLa留作业
+    kongzi.liuzuoye("写论语");  //kongzi留作业
+
+    console.log(xiaohua.zuoye);    //kaoLa的学生，作业为"背古诗"
+    console.log(xiaoming.zuoye);   //kaoLa的学生，作业为"背古诗"
+    console.log(xiaohong.zuoye);   //kaoLa的学生，作业为"背古诗"
+
+    console.log(zilu.zuoye);   //kongzi的学生，作业为"写论语"
+
+</script>
+</body>
+</html>
